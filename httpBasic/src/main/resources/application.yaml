@@ -19,4 +19,3 @@ spring:
       validation:
         enabled: false
 
-
