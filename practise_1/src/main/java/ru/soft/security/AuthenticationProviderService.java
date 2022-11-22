@@ -7,11 +7,8 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.soft.data.model.EncryptionAlgorithm;
 import ru.soft.security.data.CustomUserDetails;
 import ru.soft.security.data.JpaUserDetailsService;
 
@@ -22,8 +19,7 @@ public class AuthenticationProviderService implements AuthenticationProvider {
 
     public static final String BAD_CRED_EXC_TEXT = "Bad credentials";
     private final JpaUserDetailsService userDetailsService;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final SCryptPasswordEncoder sCryptPasswordEncoder;
+    private final PasswordEncoder delegatingPasswordEncoder;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -31,23 +27,14 @@ public class AuthenticationProviderService implements AuthenticationProvider {
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();
         CustomUserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-
-        PasswordEncoder encoder = getByAlgorithm(userDetails.getUser().getAlgorithm());
-        validatePassword(password, userDetails.getPassword(), encoder);
+        
+        validatePassword(password, userDetails.getPassword(), this.delegatingPasswordEncoder);
 
         log.info("authenticate - SUCCESS");
         return new UsernamePasswordAuthenticationToken(
                 userDetails.getUsername(),
                 userDetails.getPassword(),
                 userDetails.getAuthorities());
-    }
-
-    private PasswordEncoder getByAlgorithm(EncryptionAlgorithm algorithm) {
-        return switch (algorithm) {
-            case BCRYPT -> this.bCryptPasswordEncoder;
-            case SCRYPT -> this.sCryptPasswordEncoder;
-            default -> throw new BadCredentialsException(BAD_CRED_EXC_TEXT);
-        };
     }
 
     private void validatePassword(String rawPassword, String password, PasswordEncoder encoder) {
