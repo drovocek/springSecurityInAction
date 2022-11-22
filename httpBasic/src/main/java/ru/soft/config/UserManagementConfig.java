@@ -3,29 +3,31 @@ package ru.soft.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-
-import java.util.Collections;
 
 @Configuration
 public class UserManagementConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        InMemoryUserDetailsManager inMemoryUserDetailsManager = new InMemoryUserDetailsManager();
+        var manager = new InMemoryUserDetailsManager();
 
-        UserDetails user = User
-                .withUsername("admin")
-                .password("admin")
-                .authorities(Collections.emptyList())
+        var user1 = User.withUsername("john")
+                .password("12345")
+                .roles("ADMIN")
                 .build();
-        inMemoryUserDetailsManager.createUser(user);
+        var user2 = User.withUsername("jane")
+                .password("12345")
+                .roles("MANAGER")
+                .build();
 
-        return inMemoryUserDetailsManager;
+        manager.createUser(user1);
+        manager.createUser(user2);
+
+        return manager;
     }
 
 
