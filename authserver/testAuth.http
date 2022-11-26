@@ -1,0 +1,47 @@
+###
+
+# curl -XPOST
+#-H "content-type: application/json"
+#-d "{\"username\":\"danielle\",\"password\":\"12345\"}"
+#http://localhost:8080/user/add
+POST http://localhost:8080/user/add
+Content-Type: application/json
+
+{
+  "username": "danielle",
+  "password": "12345"
+}
+
+###
+
+# curl -XPOST
+#-H "content-type: application/json"
+#-d "{\"username\":\"danielle\",\"password\":\"12345\"}"
+#http:/./localhost:8080/user/auth
+POST http://localhost:8080/user/auth
+Content-Type: application/json
+
+{
+  "username": "danielle",
+  "password": "12345"
+}
+
+###
+
+
+###
+
+# curl -v -XPOST -H "content-type: application/json" -d "
+#{\"username\":\"danielle\",\"code\":\"8173\"}"
+#http:/./localhost:8080/otp/check
+POST http://localhost:8080/otp/check
+Content-Type: application/json
+
+
+{
+  "username": "danielle",
+  "code": "3410"
+}
+
+###
+

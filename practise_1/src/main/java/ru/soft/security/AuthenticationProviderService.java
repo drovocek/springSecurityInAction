@@ -27,8 +27,8 @@ public class AuthenticationProviderService implements AuthenticationProvider {
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();
         CustomUserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-        
-        validatePassword(password, userDetails.getPassword(), this.delegatingPasswordEncoder);
+
+        validatePassword(password, userDetails.getPassword());
 
         log.info("authenticate - SUCCESS");
         return new UsernamePasswordAuthenticationToken(
@@ -37,8 +37,8 @@ public class AuthenticationProviderService implements AuthenticationProvider {
                 userDetails.getAuthorities());
     }
 
-    private void validatePassword(String rawPassword, String password, PasswordEncoder encoder) {
-        if (!encoder.matches(rawPassword, password)) {
+    private void validatePassword(String rawPassword, String password) {
+        if (!this.delegatingPasswordEncoder.matches(rawPassword, password)) {
             log.info("authenticate - ERROR");
             throw new BadCredentialsException(BAD_CRED_EXC_TEXT);
         }

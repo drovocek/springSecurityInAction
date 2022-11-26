@@ -3,6 +3,7 @@ package ru.soft.security.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
@@ -21,10 +22,15 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.formLogin()
-                .defaultSuccessUrl("/main", true);
-        http.authorizeRequests()
-                .anyRequest().authenticated();
+        // http.formLogin().disable();
+//        http.formLogin()
+//                .defaultSuccessUrl("/main", true);
+        http.csrf().disable();
+        http.httpBasic();
+        http.sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.NEVER);
+
+        http.authorizeRequests().anyRequest().authenticated();
         //   http.authenticationProvider(this.authenticationProvider);
         return http.build();
     }

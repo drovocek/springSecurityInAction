@@ -1,0 +1,31 @@
+###
+
+# curl -H "username:danielle" -H "password:12345"
+#http://localhost:9090/login
+GET http://localhost:9090/login
+username: danielle
+password: 12345
+
+###
+
+# curl -v -H "username:danielle" -H "code:6271"
+#http:/./localhost:9090/login
+GET http://localhost:9090/login
+username: danielle
+code: 1657
+
+###
+
+# curl -H
+#"Authorization:eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImRhbmllbGxlIn0
+#.wg6LFProg7s_KvFxvnYGiZF-Mj4rr-0nJA1tVGZNn8U"
+#http:/./localhost:9090/test
+GET http://localhost:9090/test
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJ1c2VybmFtZSI6ImRhbmllbGxlIn0.5fli4zLAwtDig2-Yn9JRrtElpI_cIXFoiCDxwdDr-c_ac0KlVeAJ70Cb8oO5p6Vp8FsxO22jTrgvq7FmVgk75Q
+
+###
+
+
+
+
+
