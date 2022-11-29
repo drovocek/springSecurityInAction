@@ -1,0 +1,14 @@
+#spring.thymeleaf.cache=false
+server:
+  port: ${PORT:9090}
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: ${GITHUB_CLIENT_ID}
+            client-secret: ${GITHUB_CLIENT_SECRET}
+
+  thymeleaf:
+    cache: false

@@ -11,6 +11,7 @@
         <module name="practise_1" />
         <module name="resourceserver" />
         <module name="authserver" />
+        <module name="oauth2simple" />
       </profile>
     </annotationProcessing>
   </component>
@@ -18,6 +19,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="authserver" options="-parameters" />
       <module name="httpBasic" options="-parameters" />
+      <module name="oauth2simple" options="-parameters" />
       <module name="practise_1" options="-parameters" />
       <module name="resourceserver" options="-parameters" />
     </option>

@@ -13,6 +13,7 @@
         <module>practise_1</module>
         <module>authserver</module>
         <module>resourceserver</module>
+        <module>oauth2simple</module>
     </modules>
 
     <parent>
